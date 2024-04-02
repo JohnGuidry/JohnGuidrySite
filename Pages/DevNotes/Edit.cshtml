@@ -16,7 +16,7 @@
             <input type="hidden" asp-for="DevNotes.Id" />
             <div class="form-group">
                 <label asp-for="DevNotes.CreateDate" class="control-label"></label>
-                <input asp-for="DevNotes.CreateDate" class="form-control" readonly="@(true)" />
+                <input asp-for="DevNotes.CreateDate" class="form-control" readonly="@(true)" /> <!-- You can just modify this HTML directly and "hack" it. This also does not prevent the model from being updated altogether. -->
                 <span asp-validation-for="DevNotes.CreateDate" class="text-danger"></span>
             </div>
             <div class="form-group">
