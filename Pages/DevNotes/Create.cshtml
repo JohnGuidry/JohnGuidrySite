@@ -1,0 +1,39 @@
+@page
+@model JohnGuidry.Pages_DevNotes.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>DevNotes</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="DevNotes.CreateDate" class="control-label"></label>
+                <input asp-for="DevNotes.CreateDate" class="form-control" />
+                <span asp-validation-for="DevNotes.CreateDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DevNotes.Notes" class="control-label"></label>
+                <input asp-for="DevNotes.Notes" class="form-control" />
+                <span asp-validation-for="DevNotes.Notes" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
