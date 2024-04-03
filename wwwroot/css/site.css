@@ -20,3 +20,23 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+/*img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 40%;
+}*/
+
+.img-with-text {
+    text-align: justify;
+    margin-left: auto;
+    margin-right: auto;
+    width: 60%;
+}
+
+.img-with-text img {
+        display: block;
+        margin: 0 auto;
+        width: 100%
+}

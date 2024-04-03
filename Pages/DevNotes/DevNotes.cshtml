@@ -3,11 +3,80 @@
 @{
     ViewData["Title"] = "Developer Notes";
 }
+<h1>@ViewData["Title"]</h1>
+<br>
+
+<p>
+    I wanted to make an ASP.NET website that had a connection to a SQL database. Part of that concept, I had a few questions regarding the process. To demonstrate my findings, I have created this page for those who are interested.
+    <b><i>For any employers</i></b>, please think of this page as a demonstration of the type of technical documentation I write.<br>
+
+    <br>
+    <h2>Adding a DB</h2>
+    <br>
+
+    <p style="margin-left: 5%">
+        (1) Create ASP.NET site.<br>
+        (2) Create a database.<br>
+        (3) Create a connection between site and DB.<br>
+    </p>
+
+    <div class="img-with-text">
+    <img class="fit-picture"
+         src="~/Media/Documentation/goal1.png"
+        alt="First Goal Accomplished" />
+        <p>The old default privacy page referencing a SQL table from a local DB. This was really to demonstrate that I could grab the data and that the connection was successful.</p>
+    </div><br>
+
+    An issue I ran into immediately was telling the site to query the database. I found this to be a little frustrating, but maybe there is a better way to do it.<br><br>
+
+    <div class="img-with-text">
+    <img class="fit-picture"
+         src="~/Media/Documentation/oop.png"
+        alt="DB setup comes to ASP.NET as an object" />
+        <p>Looks like an object, kind of cool. Makes sense too since C# is OOP.</p>
+    </div><br>
+
+    I was referencing the <a href="https://learn.microsoft.com/en-us/aspnet/core/tutorials/razor-pages/?view=aspnetcore-8.0&viewFallbackFrom=aspnetcore-2.1&preserve-view=true">ASP.NET Core Tutorial for Razor Pages</a>
+    to get a clue on how this is supposed to be setup. In the tutorial you basically create a table with a front end list edit. The basic stuff like adding, editing, and deleting. 
+    What I immedaitely noticed was how data appears to be coming over as an object. I guess what I need to do from here is take in an object DevNotes with certain attributes. <br>
+    A Few issues I noticed:
+        <p style="margin-left: 5%">
+            (1) I have a connection the database but no table data is showing up?<br>
+            (2) I have my table coming over but now when I edit just one column, row's data I edit the entire row?<br>
+            (3) Based on what I have seen in SQL Profiler, how do I further query my data instead of pulling the <i>entire</i> table?<br>
+        </p>
+    <b>Issue 1's Solution:</b> Your Object declaration is actually your table and it's columns. Pretty cool!<br>
+    <b>Issue 2's Solution:</b> You can modify your object to make a column readonly. This is interesting since the object makes LastUpdate readonly but to the database the column can still be modified. In best practice you'd probably want to make sure only Sysadmin can edit the DB and the web app.<br>
+    <b>Issue 3's Soltion:</b> See the following examples<br><br>
+
+    <div class="img-with-text">
+    <img class="fit-picture"
+         src="~/Media/Documentation/querycode.png"
+         alt="C#'s code for the query I want" />
+    <p>Let's grab a variable devnotes that is a version of your Object DevNotes where m is some model where m.ID is equal to 1. If the result is null return a NotFound error, otherwise set our ViewData[] to our result.</p>
+    </div><br>
+
+    <div class="img-with-text">
+    <img class="fit-picture"
+         src="~/Media/Documentation/runtimequery.png"
+         alt="SQL Profiler return" />
+    <p>What is actually being queried? Let's take a look at SQL Profiler. Looks like TOP(1)? and where ID == 1.</p>
+    </div>
+    <br>
+
+    That's what I want but why Top(1)? Oh it comes from FirstOrDefaultAsync since that always returns 1 item. Huh... well how do I do something more complex? Let's say I wanted to track most recent update timestamps. How would I do that?<br><br>
 
 
-<img class="fit-picture"
-     src="~/Media/Documentation/goal1.png"
-     alt="First Goal Accomplished" />
+    <div class="img-with-text">
+    <img class="fit-picture"
+         src="~/Media/Documentation/lastupdate.png"
+         alt="A little more complex query" />
+    <p>I want the most recent timestamp so I would want to order by CreateDate and I want the most recent value so grab the CreateDate closest to right now.</p>
+    </div>
+
+<br>
+
+</p>
 
 <p>This page was last updated as of @ViewData["LastUpdate"]</p>
 <p>This page is under construction as of @ViewData["StartDate"]</p>
