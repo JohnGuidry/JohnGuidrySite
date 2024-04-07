@@ -74,6 +74,15 @@
     <p>I want the most recent timestamp so I would want to order by CreateDate and I want the most recent value so grab the CreateDate closest to right now.</p>
     </div>
 
+    Orginal deployment had issues where if the DB connection did not exist, then await until connection is made. This made the pages load slowly. Instead, I am now checking the evnrionment first.
+
+    <div class="img-with-text">
+    <img class="fit-picture"
+         src="~/Media/Documentation/local.png"
+         alt="A little more complex query" />
+    <p>With AWS there will be no load for the database, only if my PC is the UserDomainName</p>
+    </div>
+
 <br>
 
 </p>
