@@ -25,19 +25,22 @@ namespace JohnGuidry.Pages_DevNotes
         {
             try
             {
-                var StartDate = await _context.DevNotes.FirstOrDefaultAsync(m => m.Id == 1);
-                var LastUpdate = await _context.DevNotes.OrderBy(c => c.CreateDate).LastOrDefaultAsync(m => m.CreateDate <= System.DateTime.Now);
-
-                // Check if we recieved data from DB.
-                // TODO: Add logging
-                if (StartDate == null || LastUpdate == null)
+                //Check if we are hosting off local machine, otherwise don't query DB.
+                if (Environment.UserDomainName == "SILENT-DARK")
                 {
-                    return NotFound();
+                    var StartDate = await _context.DevNotes.FirstOrDefaultAsync(m => m.Id == 1);
+                    var LastUpdate = await _context.DevNotes.OrderBy(c => c.CreateDate).LastOrDefaultAsync(m => m.CreateDate <= System.DateTime.Now);
+
+                    // Check if we recieved data from DB.
+                    // TODO: Add logging
+                    if (StartDate == null || LastUpdate == null)
+                    {
+                        return NotFound();
+                    }
+
+                    ViewData["StartDate"] = StartDate.CreateDate.ToString();
+                    ViewData["LastUpdate"] = LastUpdate.CreateDate.ToString();
                 }
-
-                ViewData["StartDate"] = StartDate.CreateDate.ToString();
-                ViewData["LastUpdate"] = LastUpdate.CreateDate.ToString();
-
 
                 return Page();
             } catch (Exception)
