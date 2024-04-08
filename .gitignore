@@ -363,3 +363,6 @@ MigrationBackup/
 FodyWeavers.xsd
 /site
 /aws-beanstalk-tools-defaults.json
+/appsettings.json
+/appsettings_dev.Development.json
+/appsettings_dev.json
