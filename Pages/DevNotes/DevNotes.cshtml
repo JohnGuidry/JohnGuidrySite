@@ -73,19 +73,34 @@
          alt="A little more complex query" />
     <p>I want the most recent timestamp so I would want to order by CreateDate and I want the most recent value so grab the CreateDate closest to right now.</p>
     </div>
+    <br>
 
-    Orginal deployment had issues where if the DB connection did not exist, then await until connection is made. This made the pages load slowly. Instead, I am now checking the evnrionment first.
+    Orginal deployment had issues where if the DB connection did not exist, then await until connection is made. This made the pages load slowly. Instead, I am now checking the evnrionment first.<br><br>
 
     <div class="img-with-text">
     <img class="fit-picture"
          src="~/Media/Documentation/local.png"
-         alt="A little more complex query" />
+         alt="Getting around loading a dead connection" />
     <p>With AWS there will be no load for the database, only if my PC is the UserDomainName</p>
     </div>
+    <br>
+
+    I was able to figure out an alternative method to connect to an AWS hosted database. Turns out, when setting up the environment there is no real way to opt-in to the freemium database.
+    Instead, you need to create this on the side as a public RDS. From there, you need to make the VPC connections to allow you to connect from AWS to your local SQL Server Management Studio.<br><br>
+
+    <div class="img-with-text">
+    <img class="fit-picture"
+         src="~/Media/Documentation/RDSConnection.png"
+         alt="Able to connect to RDS via SSMS locally" />
+    <p>Established connection from my RDS database to my SQL Server Management Studio on my local machine</p>
+    </div>
+    <br>
+
+    This now means the the below statements are now a database connection coming from RDS to the hosted AWS code. Pretty cool!
 
 <br>
 
 </p>
 
-<p>This page was last updated as of @ViewData["LastUpdate"]</p>
-<p>This page is under construction as of @ViewData["StartDate"]</p>
+<p>This page was last updated as of @ViewData["LastUpdate"] PST</p>
+<p>This page is under construction as of @ViewData["StartDate"] PST</p>

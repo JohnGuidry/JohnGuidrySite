@@ -25,25 +25,22 @@ namespace JohnGuidry.Pages_DevNotes
         {
             try
             {
-                //Check if we are hosting off local machine, otherwise don't query DB.
-                if (Environment.UserDomainName == "SILENT-DARK")
+                var StartDate = await _context.DevNotes.FirstOrDefaultAsync(m => m.Id == 1);
+                var LastUpdate = await _context.DevNotes.OrderBy(c => c.CreateDate).LastOrDefaultAsync(m => m.CreateDate <= System.DateTime.Now);
+
+                // Check if we recieved data from DB.
+                // TODO: Add logging
+                if (StartDate == null || LastUpdate == null)
                 {
-                    var StartDate = await _context.DevNotes.FirstOrDefaultAsync(m => m.Id == 1);
-                    var LastUpdate = await _context.DevNotes.OrderBy(c => c.CreateDate).LastOrDefaultAsync(m => m.CreateDate <= System.DateTime.Now);
-
-                    // Check if we recieved data from DB.
-                    // TODO: Add logging
-                    if (StartDate == null || LastUpdate == null)
-                    {
-                        return NotFound();
-                    }
-
-                    ViewData["StartDate"] = StartDate.CreateDate.ToString();
-                    ViewData["LastUpdate"] = LastUpdate.CreateDate.ToString();
+                    return NotFound();
                 }
 
+                ViewData["StartDate"] = StartDate.CreateDate.ToString();
+                ViewData["LastUpdate"] = LastUpdate.CreateDate.ToString();
+
                 return Page();
-            } catch (Exception)
+            }
+            catch (Exception)
             {
                 //Exception if the DB is down. I dont really like how this is handled but I'm doing this to not pay AWS costs for a DB. In other words, no DB, load the page anyways.
                 return Page();
